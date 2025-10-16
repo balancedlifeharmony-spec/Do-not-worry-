@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Weight of the World – Complete Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Merriweather', serif;
+      background: radial-gradient(circle at center, #0d1b2a 0%, #1b263b 100%);
+      color: #f8f9fa;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 60px 20px 30px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(0,0,0,0.4));
+    }
+    header h1 { font-size: 2.8rem; letter-spacing: 1px; color: #e0e0e0; }
+    header h2 { font-family: 'Lato', sans-serif; font-weight: 300; color: #b8b8b8; margin-top: 10px; }
+    .book {
+      width: 90%;
+      max-width: 900px;
+      margin: 50px auto;
+      perspective: 2000px;
+    }
+    .page {
+      background: #fafafa;
+      color: #222;
+      width: 100%;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      transform-origin: left;
+      transition: transform 1s ease, box-shadow 0.5s;
+      transform-style: preserve-3d;
+      position: absolute;
+      backface-visibility: hidden;
+    }
+    .page-content {
+      max-height: 70vh;
+      overflow-y: auto;
+      line-height: 1.7;
+      font-size: 1.05rem;
+      font-family: 'Lato', sans-serif;
+      padding-right: 15px;
+    }
+    .page h3 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #1b263b;
+    }
+    .controls {
+      text-align: center;
+      margin-top: 70vh;
+    }
+    button {
+      background: #1b263b;
+      color: #f8f9fa;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border-radius: 6px;
+      margin: 0 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover { background: #415a77; }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #bbb;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>THE WEIGHT OF THE WORLD</h1>
+    <h2>Finding Peace in Your Circle of Control</h2>
+  </header>
+
+  <div class="book" id="book">
+    <div class="page" id="page1">
+      <div class="page-content">
+        <h3>Preface – The Day I Put Down the World</h3>
+        <p>“I remember the exact moment I realized I was making myself miserable...”</p>
+        <p>(Full content from Chapter 1 PDF goes here…)</p>
+      </div>
+    </div>
+
+    <div class="page" id="page2">
+      <div class="page-content">
+        <h3>Chapter 10 – Concern Without Worry</h3>
+        <p>“The question that stops people cold when they first consider the circle of control…”</p>
+        <p>(Full content from Chapters 10–12 PDF continues…)</p>
+      </div>
+    </div>
+
+    <div class="page" id="page3">
+      <div class="page-content">
+        <h3>Chapter 11 – Your Actual Leverage Points</h3>
+        <p>(Excerpt from Marcus Aurelius, leverage, ripple vs. wave effects…)</p>
+      </div>
+    </div>
+
+    <div class="page" id="page4">
+      <div class="page-content">
+        <h3>Chapter 12 – Roots Before Branches</h3>
+        <p>(Local presence, the compound effect of showing up…)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="prevPage()">◀ Previous</button>
+    <button onclick="nextPage()">Next ▶</button>
+  </div>
+
+  <footer>
+    <p><strong>Built by Victory Hour Multimedia Inc.</strong> 🌐 <a href="https://www.victoryhourmedia.com" style="color:#f8f9fa;">victoryhourmedia.com</a> | ✉️ info@victoryhourmedia.com<br>
+    *We build brands that lead. From strategy to design to digital presence—your growth is our mission.*</p>
+  </footer>
+
+  <script>
+    let current = 0;
+    const pages = document.querySelectorAll('.page');
+    pages.forEach((page, i) => {
+      page.style.zIndex = pages.length - i;
+    });
+
+    function showPage(n) {
+      pages.forEach((p, i) => {
+        if (i < n) p.style.transform = 'rotateY(-180deg)';
+        else p.style.transform = 'rotateY(0deg)';
+      });
+    }
+
+    function nextPage() {
+      if (current < pages.length) { current++; showPage(current); }
+    }
+    function prevPage() {
+      if (current > 0) { current--; showPage(current); }
+    }
+  </script>
+</body>
+</html>
