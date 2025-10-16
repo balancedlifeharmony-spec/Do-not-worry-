@@ -1,150 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Weight of the World – Complete Edition</title>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="gold-globe-heart.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Merriweather', serif;
-      background: radial-gradient(circle at center, #0d1b2a 0%, #1b263b 100%);
-      color: #f8f9fa;
-      overflow-x: hidden;
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Open Sans',sans-serif;
+      background:#0d1b2a;
+      color:#222;
+      overflow-x:hidden;
     }
-    header {
-      text-align: center;
-      padding: 60px 20px 30px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(0,0,0,0.4));
+    h1,h2,h3,h4{font-family:'Playfair Display',serif;color:#1b263b;}
+    a{text-decoration:none;color:#1b263b;}
+    .book-container{
+      width:100%;
+      max-width:960px;
+      margin:0 auto;
+      overflow:hidden;
+      position:relative;
+      min-height:100vh;
+      background:#fafafa;
+      box-shadow:0 0 20px rgba(0,0,0,0.3);
+      border-radius:8px;
     }
-    header h1 { font-size: 2.8rem; letter-spacing: 1px; color: #e0e0e0; }
-    header h2 { font-family: 'Lato', sans-serif; font-weight: 300; color: #b8b8b8; margin-top: 10px; }
-    .book {
-      width: 90%;
-      max-width: 900px;
-      margin: 50px auto;
-      perspective: 2000px;
+    section{
+      display:none;
+      padding:60px 40px;
+      animation:slideIn 0.8s ease;
     }
-    .page {
-      background: #fafafa;
-      color: #222;
-      width: 100%;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-      transform-origin: left;
-      transition: transform 1s ease, box-shadow 0.5s;
-      transform-style: preserve-3d;
-      position: absolute;
-      backface-visibility: hidden;
+    section.active{display:block;}
+    @keyframes slideIn{
+      from{transform:translateX(100%);opacity:0;}
+      to{transform:translateX(0);opacity:1;}
     }
-    .page-content {
-      max-height: 70vh;
-      overflow-y: auto;
-      line-height: 1.7;
-      font-size: 1.05rem;
-      font-family: 'Lato', sans-serif;
-      padding-right: 15px;
+    .nav-buttons{
+      display:flex;
+      justify-content:space-between;
+      margin-top:40px;
     }
-    .page h3 {
-      font-family: 'Merriweather', serif;
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-      color: #1b263b;
+    button{
+      background:#1b263b;
+      color:#f8f9fa;
+      border:none;
+      padding:12px 24px;
+      border-radius:6px;
+      cursor:pointer;
+      font-size:1rem;
+      transition:background 0.3s;
     }
-    .controls {
-      text-align: center;
-      margin-top: 70vh;
+    button:hover{background:#415a77;}
+    footer{
+      text-align:center;
+      padding:20px;
+      font-size:0.9rem;
+      color:#bbb;
+      background:#1b263b;
+      color:#eee;
+      border-top:4px solid #d4af37;
     }
-    button {
-      background: #1b263b;
-      color: #f8f9fa;
-      border: none;
-      padding: 12px 25px;
-      font-size: 1rem;
-      border-radius: 6px;
-      margin: 0 10px;
-      cursor: pointer;
-      transition: background 0.3s;
+    .cover{
+      background:url('/mnt/data/A_book_cover_titled_"The_Weight_of_the_World"_disp.png') center/cover no-repeat;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      align-items:flex-start;
+      padding:60px;
+      color:#fff;
+      text-shadow:0 2px 6px rgba(0,0,0,0.6);
+      position:relative;
     }
-    button:hover { background: #415a77; }
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #bbb;
-      font-size: 0.9rem;
+    .cover h1{font-size:3rem;color:#fff;}
+    .cover h2{font-size:1.3rem;font-weight:400;color:#eee;margin-top:10px;}
+    .cover p.author{font-size:1.1rem;margin-top:20px;font-style:italic;}
+    .gold-badge{
+      position:absolute;
+      bottom:40px;
+      right:40px;
+      background:linear-gradient(145deg,#1b263b,#0d1b2a);
+      border:2px solid #d4af37;
+      color:#d4af37;
+      border-radius:50%;
+      width:140px;
+      height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-weight:600;
+      font-size:0.85rem;
+      box-shadow:0 0 20px rgba(212,175,55,0.4);
+    }
+    .toc{
+      background:#f5f5f5;
+      color:#1b263b;
+      min-height:100vh;
+    }
+    .toc h2{margin-bottom:20px;}
+    .toc ul{list-style:none;line-height:2;}
+    .toc li{margin-left:20px;}
+    .toc a:hover{text-decoration:underline;}
+    .page-title{
+      margin-bottom:20px;
+      border-bottom:2px solid #d4af37;
+      padding-bottom:10px;
+      color:#1b263b;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>THE WEIGHT OF THE WORLD</h1>
-    <h2>Finding Peace in Your Circle of Control</h2>
-  </header>
 
-  <div class="book" id="book">
-    <div class="page" id="page1">
-      <div class="page-content">
-        <h3>Preface – The Day I Put Down the World</h3>
-        <p>“I remember the exact moment I realized I was making myself miserable...”</p>
-        <p>(Full content from Chapter 1 PDF goes here…)</p>
+<div class="book-container">
+  <!-- Cover Page -->
+  <section id="cover" class="active">
+    <div class="cover">
+      <h1>The Weight of the World</h1>
+      <h2>Finding Peace in Your Circle of Control</h2>
+      <p class="author">By Emhemed Elahresh</p>
+      <div class="gold-badge">
+        10% of proceeds<br>to feed<br>the hungry
       </div>
     </div>
-
-    <div class="page" id="page2">
-      <div class="page-content">
-        <h3>Chapter 10 – Concern Without Worry</h3>
-        <p>“The question that stops people cold when they first consider the circle of control…”</p>
-        <p>(Full content from Chapters 10–12 PDF continues…)</p>
-      </div>
+    <div class="nav-buttons">
+      <div></div>
+      <button onclick="nextPage()">Next ▶</button>
     </div>
+  </section>
 
-    <div class="page" id="page3">
-      <div class="page-content">
-        <h3>Chapter 11 – Your Actual Leverage Points</h3>
-        <p>(Excerpt from Marcus Aurelius, leverage, ripple vs. wave effects…)</p>
-      </div>
+  <!-- Table of Contents -->
+  <section id="toc" class="toc">
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#preface" onclick="goTo('preface')">Preface – The Day I Put Down the World</a></li>
+      <li><a href="#ch1" onclick="goTo('ch1')">Chapter 1 – The Circle of Control</a></li>
+      <li><a href="#ch2" onclick="goTo('ch2')">Chapter 2 – The Mind’s Illusion of Control</a></li>
+      <li><a href="#ch3" onclick="goTo('ch3')">Chapter 3 – The Weight We Pick Up</a></li>
+      <li><a href="#ch4" onclick="goTo('ch4')">Chapter 4 – The Myth of Constant Readiness</a></li>
+      <li><a href="#ch5" onclick="goTo('ch5')">Chapter 5 – The Economy of Energy</a></li>
+      <li><a href="#ch6" onclick="goTo('ch6')">Chapter 6 – The Nervous System Knows</a></li>
+      <li><a href="#ch7" onclick="goTo('ch7')">Chapter 7 – Detachment Is Not Indifference</a></li>
+      <li><a href="#ch8" onclick="goTo('ch8')">Chapter 8 – The Permission to Release</a></li>
+      <li><a href="#ch9" onclick="goTo('ch9')">Chapter 9 – Peace and Power</a></li>
+      <li><a href="#ch10" onclick="goTo('ch10')">Chapter 10 – Concern Without Worry</a></li>
+      <li><a href="#ch11" onclick="goTo('ch11')">Chapter 11 – Your Actual Leverage Points</a></li>
+      <li><a href="#ch12" onclick="goTo('ch12')">Chapter 12 – Roots Before Branches</a></li>
+      <li><a href="#ch13" onclick="goTo('ch13')">Chapter 13 – The Finitude Advantage</a></li>
+      <li><a href="#ch14" onclick="goTo('ch14')">Chapter 14 – From Urgency to Presence</a></li>
+      <li><a href="#ch15" onclick="goTo('ch15')">Chapter 15 – Systems, Not Goals</a></li>
+      <li><a href="#ch16" onclick="goTo('ch16')">Chapter 16 – The Emotional Ecosystem</a></li>
+      <li><a href="#ch17" onclick="goTo('ch17')">Chapter 17 – The Practice of Enough</a></li>
+      <li><a href="#ch18" onclick="goTo('ch18')">Chapter 18 – The End of the World (As You Know It)</a></li>
+      <li><a href="#ch19" onclick="goTo('ch19')">Chapter 19 – Integration</a></li>
+      <li><a href="#ch20" onclick="goTo('ch20')">Chapter 20 – The Circle Expands</a></li>
+      <li><a href="#about" onclick="goTo('about')">About the Author</a></li>
+      <li><a href="#summary" onclick="goTo('summary')">Book Summary</a></li>
+      <li><a href="#hunger" onclick="goTo('hunger')">Fighting World Hunger</a></li>
+      <li><a href="#notes1" onclick="goTo('notes1')">Notes</a></li>
+    </ul>
+    <div class="nav-buttons">
+      <button onclick="prevPage()">◀ Back</button>
+      <button onclick="nextPage()">Next ▶</button>
     </div>
+  </section>
 
-    <div class="page" id="page4">
-      <div class="page-content">
-        <h3>Chapter 12 – Roots Before Branches</h3>
-        <p>(Local presence, the compound effect of showing up…)</p>
-      </div>
+  <!-- Preface -->
+  <section id="preface">
+    <h2 class="page-title">Preface – The Day I Put Down the World</h2>
+    <p>“I remember the exact moment I realized I was making myself miserable...”</p>
+    <p>(Preface content continues here — full text from your original PDF.)</p>
+    <div class="nav-buttons">
+      <button onclick="prevPage()">◀ Back</button>
+      <button onclick="nextPage()">Next ▶</button>
     </div>
-  </div>
+  </section>
 
-  <div class="controls">
-    <button onclick="prevPage()">◀ Previous</button>
-    <button onclick="nextPage()">Next ▶</button>
-  </div>
+  <!-- Chapter 1 -->
+  <section id="ch1">
+    <h2 class="page-title">Chapter 1 – The Circle of Control</h2>
+    <p>(Full text of Chapter 1 from your PDF...)</p>
+    <div class="nav-buttons">
+      <button onclick="prevPage()">◀ Back</button>
+      <button onclick="nextPage()">Next ▶</button>
+    </div>
+  </section>
+  <!-- Chapter 2 -->
+  <section id="ch2">
+    <h2 class="page-title">Chapter 2 – The Mind’s Illusion of Control</h2>
+    <p>(Insert complete Chapter 2 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
 
+  <!-- Chapter 3 -->
+  <section id="ch3">
+    <h2 class="page-title">Chapter 3 – The Weight We Pick Up</h2>
+    <p>(Insert complete Chapter 3 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 4 -->
+  <section id="ch4">
+    <h2 class="page-title">Chapter 4 – The Myth of Constant Readiness</h2>
+    <p>(Insert complete Chapter 4 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 5 -->
+  <section id="ch5">
+    <h2 class="page-title">Chapter 5 – The Economy of Energy</h2>
+    <p>(Insert complete Chapter 5 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 6 -->
+  <section id="ch6">
+    <h2 class="page-title">Chapter 6 – The Nervous System Knows</h2>
+    <p>(Insert complete Chapter 6 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 7 -->
+  <section id="ch7">
+    <h2 class="page-title">Chapter 7 – Detachment Is Not Indifference</h2>
+    <p>(Insert complete Chapter 7 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 8 -->
+  <section id="ch8">
+    <h2 class="page-title">Chapter 8 – The Permission to Release</h2>
+    <p>(Insert complete Chapter 8 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 9 -->
+  <section id="ch9">
+    <h2 class="page-title">Chapter 9 – Peace and Power</h2>
+    <p>(Insert complete Chapter 9 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 10 -->
+  <section id="ch10">
+    <h2 class="page-title">Chapter 10 – Concern Without Worry</h2>
+    <p>(Insert full Chapter 10 text here — starting “The question that stops people cold…”)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 11 -->
+  <section id="ch11">
+    <h2 class="page-title">Chapter 11 – Your Actual Leverage Points</h2>
+    <p>(Insert complete Chapter 11 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 12 -->
+  <section id="ch12">
+    <h2 class="page-title">Chapter 12 – Roots Before Branches</h2>
+    <p>(Insert complete Chapter 12 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 13 -->
+  <section id="ch13">
+    <h2 class="page-title">Chapter 13 – The Finitude Advantage</h2>
+    <p>(Insert complete Chapter 13 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 14 -->
+  <section id="ch14">
+    <h2 class="page-title">Chapter 14 – From Urgency to Presence</h2>
+    <p>(Insert complete Chapter 14 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 15 -->
+  <section id="ch15">
+    <h2 class="page-title">Chapter 15 – Systems, Not Goals</h2>
+    <p>(Insert complete Chapter 15 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 16 -->
+  <section id="ch16">
+    <h2 class="page-title">Chapter 16 – The Emotional Ecosystem</h2>
+    <p>(Insert complete Chapter 16 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 17 -->
+  <section id="ch17">
+    <h2 class="page-title">Chapter 17 – The Practice of Enough</h2>
+    <p>(Insert complete Chapter 17 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 18 -->
+  <section id="ch18">
+    <h2 class="page-title">Chapter 18 – The End of the World (As You Know It)</h2>
+    <p>(Insert complete Chapter 18 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 19 -->
+  <section id="ch19">
+    <h2 class="page-title">Chapter 19 – Integration</h2>
+    <p>(Insert complete Chapter 19 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Chapter 20 -->
+  <section id="ch20">
+    <h2 class="page-title">Chapter 20 – The Circle Expands</h2>
+    <p>(Insert complete Chapter 20 text here.)</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- About the Author -->
+  <section id="about">
+    <h2 class="page-title">About the Author</h2>
+    <p><strong>Emhemed Elahresh</strong> is a writer, creator, and founder of <strong>Victory Hour Multimedia Inc.</strong>—a movement devoted to empowering minds and building meaningful creations that feed both the spirit and the world. Through stories, philosophy, and design, his work blends ancient wisdom with modern awareness to help readers reclaim their inner balance and sense of purpose.</p>
+    <p>His signature message—<em>“10% to feed the hungry”</em>—runs through every project he creates, turning creativity into a force for good.</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Summary -->
+  <section id="summary">
+    <h2 class="page-title">Book Summary</h2>
+    <p><em>The Weight of the World</em> is a book about liberation—not from responsibility, but from illusion. It teaches how to distinguish between what we can control and what we cannot, between caring and worrying, and between presence and performance.</p>
+    <p>Across twenty chapters, it guides readers through the architecture of attention, the discipline of focus, and the peace that comes from rooting ourselves in what is truly ours to carry. It’s a framework for clarity in an age of noise, a path back to agency, and a reminder that real change begins within.</p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+  <!-- Fighting World Hunger -->
+  <section id="hunger">
+    <h2 class="page-title">Fighting World Hunger – The Victory Hour Mission</h2>
+    <p>Hunger is not a lack of food—it’s a lack of access, opportunity, and awareness. Every creation under <strong>Victory Hour Multimedia Inc.</strong> carries a mission to change that.</p>
+    <p><strong>10% of all proceeds</strong> from this book and every project under the Victory Hour brand go toward food programs, local kitchens, and community networks fighting hunger across the world.</p>
+    <p>When you buy, read, or share this book—you are part of that mission.</p>
+    <p><strong>You are feeding hope. You are feeding life. You are Victory Hour.</strong></p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <!-- Notes pages -->
+  <section id="notes1"><h2 class="page-title">Notes</h2><p style="min-height:70vh;border-top:1px dashed #ccc;margin-top:10px;"></p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <section id="notes2"><h2 class="page-title">Notes</h2><p style="min-height:70vh;border-top:1px dashed #ccc;margin-top:10px;"></p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <section id="notes3"><h2 class="page-title">Notes</h2><p style="min-height:70vh;border-top:1px dashed #ccc;margin-top:10px;"></p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <section id="notes4"><h2 class="page-title">Notes</h2><p style="min-height:70vh;border-top:1px dashed #ccc;margin-top:10px;"></p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button><button onclick="nextPage()">Next ▶</button></div>
+  </section>
+
+  <section id="notes5"><h2 class="page-title">Notes</h2><p style="min-height:70vh;border-top:1px dashed #ccc;margin-top:10px;"></p>
+    <div class="nav-buttons"><button onclick="prevPage()">◀ Back</button></div>
+  </section>
+
+  <!-- Footer -->
   <footer>
-    <p><strong>Built by Victory Hour Multimedia Inc.</strong> 🌐 <a href="https://www.victoryhourmedia.com" style="color:#f8f9fa;">victoryhourmedia.com</a> | ✉️ info@victoryhourmedia.com<br>
-    *We build brands that lead. From strategy to design to digital presence—your growth is our mission.*</p>
+    <p><strong>Built by Victory Hour Multimedia Inc.</strong><br>
+    🌐 <a href="https://www.victoryhourmedia.com" style="color:#d4af37;">victoryhourmedia.com</a> | ✉️ info@victoryhourmedia.com<br>
+    <em>We build brands that lead. From strategy to design to digital presence — your growth is our mission.</em><br>
+    10% of all profits go to feed the hungry.</p>
   </footer>
+</div>
 
-  <script>
-    let current = 0;
-    const pages = document.querySelectorAll('.page');
-    pages.forEach((page, i) => {
-      page.style.zIndex = pages.length - i;
-    });
-
-    function showPage(n) {
-      pages.forEach((p, i) => {
-        if (i < n) p.style.transform = 'rotateY(-180deg)';
-        else p.style.transform = 'rotateY(0deg)';
-      });
-    }
-
-    function nextPage() {
-      if (current < pages.length) { current++; showPage(current); }
-    }
-    function prevPage() {
-      if (current > 0) { current--; showPage(current); }
-    }
-  </script>
+<script>
+let current = 0;
+const pages = document.querySelectorAll("section");
+function showPage(n){
+  pages.forEach((p,i)=>p.classList.toggle("active",i===n));
+  current = n;
+}
+function nextPage(){ if(current < pages.length-1){ showPage(current+1);} }
+function prevPage(){ if(current > 0){ showPage(current-1);} }
+function goTo(id){
+  const index = Array.from(pages).findIndex(p=>p.id===id);
+  if(index>=0) showPage(index);
+}
+</script>
 </body>
 </html>
